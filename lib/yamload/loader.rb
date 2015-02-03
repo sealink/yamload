@@ -10,7 +10,7 @@ module Yamload
     end
 
     def loaded_hash
-      @loaded_hash ||= defaults.deep_merge(load)
+      @loaded_hash ||= IceNine.deep_freeze(defaults.deep_merge(load))
     end
 
     def obj
