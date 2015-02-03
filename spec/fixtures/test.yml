@@ -1,0 +1,23 @@
+---
+test: true
+users:
+  - first_name: Testy
+    last_name: Tester
+    address:
+      address_line_1: 1 Test Avenue
+      address_line_2:
+      city: Testville
+      state: TST
+      post_code: 1234
+      country: Testalia
+    email: testy.tester@test.com
+  - first_name: Speccy
+    last_name: Speccer
+    address:
+      address_line_1: Unit 1
+      address_line_2: 42 Spec Street
+      city: Specwood
+      state: SPC
+      post_code: 5678
+      country: Specland
+    email: speccy.speccer@spec.com
