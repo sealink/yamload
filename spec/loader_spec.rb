@@ -66,6 +66,15 @@ describe Yamload do
   specify { expect(config_obj.users[1].email).to eq 'speccy.speccer@spec.com' }
   specify { expect(config_obj.settings.remote_access).to eq true }
 
+  context 'when trying to modify the configuration object' do
+    let(:new_user) { double('new user') }
+    specify 'the object should be immutable' do
+      expect { config_obj.users << new_user }
+        .to raise_error RuntimeError, "can't modify frozen Array"
+      expect(config_obj.users).not_to include new_user
+    end
+  end
+
   context 'when a schema is defined' do
     let(:define_schema) {
       loader.define_schema do |schema|

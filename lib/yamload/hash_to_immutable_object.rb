@@ -8,15 +8,24 @@ module Yamload
     end
 
     def call
-      anima = Anima.new(*@hash.keys)
-      Class.new { include anima }.new(
-        @hash.map.with_object({}) { |(key, value), hash|
-          hash[key] = convert(value)
-        }
-      )
+      immutable_objects_factory.new(converted_hash)
     end
 
     private
+
+    def immutable_objects_factory
+      anima = Anima.new(*@hash.keys)
+      Class.new do
+        include Adamantium
+        include anima
+      end
+    end
+
+    def converted_hash
+      @hash.map.with_object({}) { |(key, value), hash|
+        hash[key] = convert(value)
+      }
+    end
 
     def convert(value)
       if value.is_a?(Hash)
