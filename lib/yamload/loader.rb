@@ -1,5 +1,6 @@
 require 'yaml'
 require 'respect'
+require 'facets/hash/deep_merge'
 
 module Yamload
   class Loader
@@ -9,7 +10,7 @@ module Yamload
     end
 
     def loaded_hash
-      @loaded_hash ||= load
+      @loaded_hash ||= defaults.deep_merge(load)
     end
 
     def obj
@@ -25,6 +26,12 @@ module Yamload
       @schema = Respect::HashSchema.define do |schema|
         yield schema
       end
+    end
+
+    attr_writer :defaults
+
+    def defaults
+      @defaults ||= {}
     end
 
     def valid?

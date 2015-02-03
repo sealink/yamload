@@ -9,6 +9,7 @@
 * YAML files loading
 * Recursive conversion to immutable objects
 * Schema validation
+* Default values
 
 ## Installation
 
@@ -62,6 +63,11 @@ loader.validate!
 # => nil
 loader.error
 # => nil
+```
+
+Define defaults
+```ruby
+loader.defaults = { 'test' => true , 'coverage' => { 'minimum' => 0.95 } }
 ```
 
 ## Contributing

@@ -37,7 +37,10 @@ describe Yamload do
           },
           'email'      => 'speccy.speccer@spec.com'
         }
-      ]
+      ],
+      'settings' => {
+        'remote_access' => true
+      }
     }
   }
 
@@ -61,6 +64,7 @@ describe Yamload do
   specify { expect(config_obj.users[1].address.post_code).to eq 5678 }
   specify { expect(config_obj.users[1].address.country).to eq 'Specland' }
   specify { expect(config_obj.users[1].email).to eq 'speccy.speccer@spec.com' }
+  specify { expect(config_obj.settings.remote_access).to eq true }
 
   context 'when a schema is defined' do
     let(:define_schema) {
@@ -104,5 +108,23 @@ describe Yamload do
       specify { expect(loader.error).to eq expected_error }
       specify { expect { loader.validate! }.to raise_error Yamload::SchemaError, expected_error }
     end
+  end
+
+  context 'when defaults are defined' do
+    let(:defaults) {
+      {
+        'settings' => {
+          'remember_user' => false,
+          'remote_access' => false
+        }
+      }
+    }
+
+    before do
+      loader.defaults = defaults
+    end
+
+    specify { expect(config_obj.settings.remember_user).to eq false }
+    specify { expect(config_obj.settings.remote_access).to eq true }
   end
 end

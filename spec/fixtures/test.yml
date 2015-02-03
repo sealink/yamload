@@ -21,3 +21,5 @@ users:
       post_code: 5678
       country: Specland
     email: speccy.speccer@spec.com
+settings:
+  remote_access: true
