@@ -18,6 +18,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
   spec.require_paths = ['lib']
 
+  spec.required_ruby_version = '>= 1.9.3'
+
   spec.add_dependency 'anima', '~> 0.2'
   spec.add_dependency 'facets', '~> 3.0'
   spec.add_dependency 'respect', '~> 0.1'
