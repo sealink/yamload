@@ -3,6 +3,7 @@ rvm:
   - 1.9.3
   - 2.1
   - 2.2
+script: "bundle exec rake coverage"
 notifications:
   email:
     - support@travellink.com.au
