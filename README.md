@@ -1,5 +1,11 @@
 # Yamload
 
+[![Gem Version](https://badge.fury.io/rb/yamload.png)](http://badge.fury.io/rb/yamload)
+[![Build Status](https://travis-ci.org/sealink/yamload.png?branch=master)](https://travis-ci.org/sealink/yamload)
+[![Coverage Status](https://coveralls.io/repos/sealink/yamload/badge.png)](https://coveralls.io/r/sealink/yamload)
+[![Dependency Status](https://gemnasium.com/sealink/yamload.png)](https://gemnasium.com/sealink/yamload)
+[![Code Climate](https://codeclimate.com/github/sealink/yamload.png)](https://codeclimate.com/github/sealink/yamload)
+
 * YAML files loading
 * Recursive conversion to immutable objects
 * Schema validation
