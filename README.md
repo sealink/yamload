@@ -28,7 +28,41 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Set up the YAML files directory
+```ruby
+Yamload.dir = File.join(File.dirname(File.expand_path(__FILE__)),'config')
+```
+
+e.g. config/test.yml
+```yaml
+---
+test: true
+```
+
+Load YAML files from the directory and access keys
+```ruby
+# Load config/test.yml
+loader = Yamload::Loader.new(:test)
+loader.loaded_hash('attribute')
+# => true
+loader.obj.attribute
+# => true
+```
+
+Define a schema for the configuration
+```ruby
+# Load config/test.yml
+loader = Yamload::Loader.new(:test)
+loader.define_schema do |schema|
+  schema.string 'test'
+end
+loader.valid?
+# => true
+loader.validate!
+# => nil
+loader.error
+# => nil
+```
 
 ## Contributing
 
