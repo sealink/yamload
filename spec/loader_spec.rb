@@ -8,6 +8,18 @@ describe Yamload do
 
   specify { expect(loader).to exist }
 
+  context 'if the directory is not specified' do
+    let(:loader) { Yamload::Loader.new(file, nil) }
+    specify { expect { config }.to raise_error IOError, 'No yml files directory specified' }
+  end
+
+  context 'if the directory is invalid' do
+    let(:current_file_dir)  { File.expand_path(File.dirname(__FILE__)) }
+    let(:invalid_dir)       { File.join(current_file_dir, 'invalid') }
+    let(:loader)            { Yamload::Loader.new(file, invalid_dir) }
+    specify { expect { config }.to raise_error IOError, "#{invalid_dir} is not a valid directory" }
+  end
+
   context 'with a non existing file' do
     let(:file) { :non_existing }
     specify { expect(loader).not_to exist }

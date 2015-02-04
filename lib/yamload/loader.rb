@@ -68,6 +68,8 @@ module Yamload
     end
 
     def filepath
+      fail IOError, 'No yml files directory specified' if @dir.nil?
+      fail IOError, "#{@dir} is not a valid directory" unless File.directory?(@dir)
       File.join(@dir, "#{@file}.yml")
     end
   end
