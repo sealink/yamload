@@ -61,6 +61,7 @@ module Yamload
     private
 
     def load
+      fail IOError, "#{@file}.yml could not be found" unless exist?
       YAML.load_file(filepath).tap do |hash|
         fail IOError, "#{@file}.yml is invalid" unless hash.is_a? Hash
       end

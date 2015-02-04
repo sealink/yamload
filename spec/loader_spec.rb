@@ -11,6 +11,7 @@ describe Yamload do
   context 'with a non existing file' do
     let(:file) { :non_existing }
     specify { expect(loader).not_to exist }
+    specify { expect { config }.to raise_error IOError, 'non_existing.yml could not be found' }
   end
 
   let(:config) { loader.loaded_hash }
