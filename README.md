@@ -1,10 +1,10 @@
 # Yamload
 
-[![Gem Version](https://badge.fury.io/rb/yamload.png)](http://badge.fury.io/rb/yamload)
-[![Build Status](https://travis-ci.org/sealink/yamload.png?branch=master)](https://travis-ci.org/sealink/yamload)
-[![Coverage Status](https://coveralls.io/repos/sealink/yamload/badge.png)](https://coveralls.io/r/sealink/yamload)
-[![Dependency Status](https://gemnasium.com/sealink/yamload.png)](https://gemnasium.com/sealink/yamload)
-[![Code Climate](https://codeclimate.com/github/sealink/yamload.png)](https://codeclimate.com/github/sealink/yamload)
+[![Gem Version](https://badge.fury.io/rb/yamload.svg)](http://badge.fury.io/rb/yamload)
+[![Build Status](https://travis-ci.org/sealink/yamload.svg?branch=master)](https://travis-ci.org/sealink/yamload)
+[![Coverage Status](https://coveralls.io/repos/sealink/yamload/badge.svg)](https://coveralls.io/r/sealink/yamload)
+[![Dependency Status](https://gemnasium.com/sealink/yamload.svg)](https://gemnasium.com/sealink/yamload)
+[![Code Climate](https://codeclimate.com/github/sealink/yamload/badges/gpa.svg)](https://codeclimate.com/github/sealink/yamload)
 
 * YAML files loading
 * Recursive conversion to immutable objects
