@@ -145,4 +145,13 @@ describe Yamload do
     specify { expect(config_obj.settings.remember_user).to eq false }
     specify { expect(config_obj.settings.remote_access).to eq true }
   end
+
+  context 'when reloading' do
+    let(:original_hash) { loader.loaded_hash }
+    before do
+      original_hash
+      loader.reload
+    end
+    specify { expect(loader.loaded_hash).not_to be original_hash }
+  end
 end
