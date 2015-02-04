@@ -1,5 +1,5 @@
 require 'yaml'
-require 'respect'
+require 'classy_hash'
 require 'facets/hash/deep_merge'
 
 module Yamload
@@ -22,11 +22,7 @@ module Yamload
       loaded_hash
     end
 
-    def define_schema
-      @schema = Respect::HashSchema.define do |schema|
-        yield schema
-      end
-    end
+    attr_accessor :schema
 
     attr_writer :defaults
 
@@ -35,18 +31,23 @@ module Yamload
     end
 
     def valid?
-      return true if @schema.nil?
-      @schema.validate? loaded_hash
+      validate!
+      true
+    rescue SchemaError
+      false
     end
 
     def validate!
-      return if valid?
-      fail SchemaError, error
+      @error = nil
+      ClassyHash.validate(loaded_hash, @schema)
+    rescue RuntimeError => e
+      @error = e.message
+      raise SchemaError, @error
     end
 
     def error
       return nil if valid?
-      @schema.last_error.message
+      @error
     end
 
     private

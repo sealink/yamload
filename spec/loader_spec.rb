@@ -85,43 +85,52 @@ describe Yamload do
   end
 
   context 'when a schema is defined' do
-    let(:define_schema) {
-      loader.define_schema do |schema|
-        schema.array 'users' do |users_array|
-          users_array.hash do |user_hash|
-            user_hash.string 'first_name'
-            user_hash.string 'last_name'
-            user_hash.hash 'address' do |address_hash|
-              address_hash.string 'address_line_1'
-              address_hash.string 'city'
-              address_hash.string 'state'
-              address_hash.integer 'post_code'
-              address_hash.string 'country'
-            end
-            user_hash.string 'email', format: :email
-          end
-        end
-      end
+    let(:schema) {
+      {
+        'test'     => TrueClass,
+        'users'    => [
+          [
+            {
+              'first_name' => String,
+              'last_name'  => String,
+              'address'    => {
+                'address_line_1' => String,
+                'address_line_2' => [:optional, String, NilClass],
+                'city'           => String,
+                'state'          => String,
+                'post_code'      => Integer,
+                'country'        => String
+              },
+              'email'      => String
+            }
+          ]
+        ],
+        'settings' => {
+          'remote_access' => TrueClass
+        }
+      }
     }
 
-    before { define_schema }
+    before { loader.schema = schema }
 
     specify { expect(loader).to be_valid }
     specify { expect(loader.error).to be_nil }
     specify { expect { loader.validate! }.not_to raise_error }
 
     context 'when the schema is not matched' do
-      let(:define_schema) {
-        loader.define_schema do |schema|
-          schema.array 'users' do |users_array|
-            users_array.hash do |user_hash|
-              user_hash.string 'expected_attribute'
-            end
-          end
-        end
+      let(:schema) {
+        {
+          'users' => [
+            [
+              {
+                'expected_attribute' => String
+              }
+            ]
+          ]
+        }
       }
 
-      let(:expected_error) { "missing key `expected_attribute'" }
+      let(:expected_error) { '"users"[0]["expected_attribute"] is not present' }
       specify { expect(loader).not_to be_valid }
       specify { expect(loader.error).to eq expected_error }
       specify { expect { loader.validate! }.to raise_error Yamload::SchemaError, expected_error }

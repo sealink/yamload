@@ -54,9 +54,7 @@ Define a schema for the configuration
 ```ruby
 # Load config/test.yml
 loader = Yamload::Loader.new(:test)
-loader.define_schema do |schema|
-  schema.string 'test'
-end
+loader.schema = { 'test' => String }
 loader.valid?
 # => true
 loader.validate!
@@ -64,6 +62,7 @@ loader.validate!
 loader.error
 # => nil
 ```
+See [Classy Hash](https://github.com/deseretbook/classy_hash) for documentation on schema definitions
 
 Define defaults
 ```ruby
