@@ -3,7 +3,16 @@ require 'spec_helper'
 require 'yamload'
 
 describe Yamload do
-  let(:loader)      { Yamload::Loader.new(:test) }
+  let(:file)    { :test }
+  let(:loader)  { Yamload::Loader.new(file) }
+
+  specify { expect(loader).to exist }
+
+  context 'with a non existing file' do
+    let(:file) { :non_existing }
+    specify { expect(loader).not_to exist }
+  end
+
   let(:config)      { loader.loaded_hash }
   let(:config_obj)  { loader.obj }
 

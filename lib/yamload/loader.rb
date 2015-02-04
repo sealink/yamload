@@ -9,6 +9,10 @@ module Yamload
       @dir  = dir
     end
 
+    def exist?
+      File.exist?(filepath)
+    end
+
     def loaded_hash
       @loaded_hash ||= IceNine.deep_freeze(defaults.deep_merge(load))
     end
@@ -53,7 +57,11 @@ module Yamload
     private
 
     def load
-      YAML.load_file(File.join(@dir, "#{@file}.yml"))
+      YAML.load_file(filepath)
+    end
+
+    def filepath
+      File.join(@dir, "#{@file}.yml")
     end
   end
 
