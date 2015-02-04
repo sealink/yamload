@@ -13,8 +13,13 @@ describe Yamload do
     specify { expect(loader).not_to exist }
   end
 
-  let(:config)      { loader.loaded_hash }
-  let(:config_obj)  { loader.obj }
+  let(:config) { loader.loaded_hash }
+
+  context 'with an empty file' do
+    let(:file) { :empty }
+    specify { expect(loader).to exist }
+    specify { expect { config }.to raise_error IOError, 'empty.yml is invalid' }
+  end
 
   let(:expected_config) {
     {
@@ -54,6 +59,9 @@ describe Yamload do
   }
 
   specify { expect(config).to eq expected_config }
+
+  let(:config_obj)  { loader.obj }
+
   specify { expect(config_obj.test).to eq true }
   specify { expect(config_obj.users[0].first_name).to eq 'Testy' }
   specify { expect(config_obj.users[0].last_name).to eq 'Tester' }
@@ -91,6 +99,12 @@ describe Yamload do
         .to raise_error RuntimeError, "can't modify frozen Array"
       expect(config_obj.users).not_to include new_user
     end
+  end
+
+  context 'when no schema is defined' do
+    specify { expect(loader).to be_valid }
+    specify { expect(loader.error).to be_nil }
+    specify { expect { loader.validate! }.not_to raise_error }
   end
 
   context 'when a schema is defined' do

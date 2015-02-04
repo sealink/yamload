@@ -26,7 +26,11 @@ module Yamload
       loaded_hash
     end
 
-    attr_accessor :schema
+    attr_writer :schema
+
+    def schema
+      @schema ||= {}
+    end
 
     attr_writer :defaults
 
@@ -43,7 +47,7 @@ module Yamload
 
     def validate!
       @error = nil
-      ClassyHash.validate(loaded_hash, @schema)
+      ClassyHash.validate(loaded_hash, schema)
     rescue RuntimeError => e
       @error = e.message
       raise SchemaError, @error
@@ -57,7 +61,9 @@ module Yamload
     private
 
     def load
-      YAML.load_file(filepath)
+      YAML.load_file(filepath).tap do |hash|
+        fail IOError, "#{@file}.yml is invalid" unless hash.is_a? Hash
+      end
     end
 
     def filepath
