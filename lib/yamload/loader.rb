@@ -13,8 +13,14 @@ module Yamload
       File.exist?(filepath)
     end
 
+    # <b>DEPRECATED:</b> Please use <tt>content</tt> instead.
     def loaded_hash
-      @loaded_hash ||= IceNine.deep_freeze(defaults.deep_merge(load))
+      warn '[DEPRECATION] `loaded_hash` is deprecated.  Please use `content` instead.'
+      content
+    end
+
+    def content
+      @content ||= IceNine.deep_freeze(defaults.deep_merge(load))
     end
 
     def obj
@@ -22,8 +28,8 @@ module Yamload
     end
 
     def reload
-      @loaded_hash = @immutable_obj = nil
-      loaded_hash
+      @content = @immutable_obj = nil
+      content
     end
 
     attr_writer :schema
@@ -47,7 +53,7 @@ module Yamload
 
     def validate!
       @error = nil
-      ClassyHash.validate(loaded_hash, schema)
+      ClassyHash.validate(content, schema)
     rescue RuntimeError => e
       @error = e.message
       raise SchemaError, @error
