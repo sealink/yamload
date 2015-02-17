@@ -1,5 +1,6 @@
 require 'yaml'
 require 'ice_nine'
+require 'yamload/loading'
 require 'classy_hash'
 require 'facets/hash/deep_merge'
 require 'yamload/conversion'
@@ -7,12 +8,11 @@ require 'yamload/conversion'
 module Yamload
   class Loader
     def initialize(file, dir = Yamload.dir)
-      @file = file
-      @dir  = dir
+      @loader = Loading::Yaml.new(file, dir)
     end
 
     def exist?
-      File.exist?(filepath)
+      @loader.exist?
     end
 
     # <b>DEPRECATED:</b> Please use <tt>content</tt> instead.
@@ -22,7 +22,7 @@ module Yamload
     end
 
     def content
-      @content ||= IceNine.deep_freeze(defaults.deep_merge(load))
+      @content ||= IceNine.deep_freeze(defaults.deep_merge(@loader.content))
     end
 
     def obj
@@ -31,6 +31,7 @@ module Yamload
 
     def reload
       @content = @immutable_obj = nil
+      @loader.reload
       content
     end
 
@@ -64,21 +65,6 @@ module Yamload
     def error
       return nil if valid?
       @error
-    end
-
-    private
-
-    def load
-      fail IOError, "#{@file}.yml could not be found" unless exist?
-      YAML.load_file(filepath).tap do |hash|
-        fail IOError, "#{@file}.yml is invalid" unless hash.is_a? Hash
-      end
-    end
-
-    def filepath
-      fail IOError, 'No yml files directory specified' if @dir.nil?
-      fail IOError, "#{@dir} is not a valid directory" unless File.directory?(@dir)
-      File.join(@dir, "#{@file}.yml")
     end
   end
 
