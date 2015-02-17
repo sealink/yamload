@@ -7,4 +7,3 @@ module Yamload
 end
 
 require 'yamload/loader'
-require 'yamload/hash_to_immutable_object'

@@ -2,6 +2,7 @@ require 'yaml'
 require 'ice_nine'
 require 'classy_hash'
 require 'facets/hash/deep_merge'
+require 'yamload/conversion'
 
 module Yamload
   class Loader
@@ -25,7 +26,7 @@ module Yamload
     end
 
     def obj
-      @immutable_obj ||= HashToImmutableObject.new(loaded_hash).call
+      @immutable_obj ||= Conversion::Object.new(content).to_immutable
     end
 
     def reload
