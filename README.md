@@ -44,7 +44,7 @@ Load YAML files from the directory and access keys
 ```ruby
 # Load config/test.yml
 loader = Yamload::Loader.new(:test)
-loader.loaded_hash('attribute')
+loader.content('attribute')
 # => true
 loader.obj.attribute
 # => true

@@ -1,76 +1,84 @@
 require 'yaml'
-require 'classy_hash'
-require 'facets/hash/deep_merge'
+require 'ice_nine'
+require 'yamload/loading'
+require 'yamload/conversion'
+require 'yamload/defaults'
+require 'yamload/validation'
 
 module Yamload
   class Loader
     def initialize(file, dir = Yamload.dir)
-      @file = file
-      @dir  = dir
+      @loader = Loading::Yaml.new(file, dir)
     end
 
     def exist?
-      File.exist?(filepath)
+      @loader.exist?
     end
 
+    # <b>DEPRECATED:</b> Please use <tt>content</tt> instead.
     def loaded_hash
-      @loaded_hash ||= IceNine.deep_freeze(defaults.deep_merge(load))
+      warn '[DEPRECATION] `loaded_hash` is deprecated.  Please use `content` instead.'
+      content
+    end
+
+    def content
+      @content ||= IceNine.deep_freeze(content_with_defaults)
     end
 
     def obj
-      @immutable_obj ||= HashToImmutableObject.new(loaded_hash).call
+      @immutable_obj ||= Conversion::Object.new(content).to_immutable
     end
 
     def reload
-      @loaded_hash = @immutable_obj = nil
-      loaded_hash
+      @content = @immutable_obj = nil
+      @loader.reload
+      content
     end
 
-    attr_writer :schema
-
-    def schema
-      @schema ||= {}
+    def defaults=(defaults)
+      defaults_merger.defaults = defaults
     end
-
-    attr_writer :defaults
 
     def defaults
-      @defaults ||= {}
+      defaults_merger.defaults
+    end
+
+    def schema=(schema)
+      validator.schema = schema
+    end
+
+    def schema
+      validator.schema
     end
 
     def valid?
-      validate!
-      true
-    rescue SchemaError
-      false
+      validation_result.valid?
     end
 
     def validate!
-      @error = nil
-      ClassyHash.validate(loaded_hash, schema)
-    rescue RuntimeError => e
-      @error = e.message
-      raise SchemaError, @error
+      fail SchemaError, validation_result.error unless validation_result.valid?
     end
 
     def error
-      return nil if valid?
-      @error
+      validation_result.error
     end
 
     private
 
-    def load
-      fail IOError, "#{@file}.yml could not be found" unless exist?
-      YAML.load_file(filepath).tap do |hash|
-        fail IOError, "#{@file}.yml is invalid" unless hash.is_a? Hash
-      end
+    def content_with_defaults
+      defaults_merger.merge(@loader.content)
     end
 
-    def filepath
-      fail IOError, 'No yml files directory specified' if @dir.nil?
-      fail IOError, "#{@dir} is not a valid directory" unless File.directory?(@dir)
-      File.join(@dir, "#{@file}.yml")
+    def defaults_merger
+      @defaults_merger ||= Defaults::Hash.new
+    end
+
+    def validator
+      @validator ||= Validation::Hash.new
+    end
+
+    def validation_result
+      validator.validate(content)
     end
   end
 
