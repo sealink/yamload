@@ -1,9 +1,9 @@
 require 'yaml'
 require 'ice_nine'
 require 'yamload/loading'
-require 'classy_hash'
 require 'yamload/conversion'
 require 'yamload/defaults'
+require 'yamload/validation'
 
 module Yamload
   class Loader
@@ -35,12 +35,6 @@ module Yamload
       content
     end
 
-    attr_writer :schema
-
-    def schema
-      @schema ||= {}
-    end
-
     def defaults=(defaults)
       defaults_merger.defaults = defaults
     end
@@ -49,24 +43,24 @@ module Yamload
       defaults_merger.defaults
     end
 
+    def schema=(schema)
+      validator.schema = schema
+    end
+
+    def schema
+      validator.schema
+    end
+
     def valid?
-      validate!
-      true
-    rescue SchemaError
-      false
+      validation_result.valid?
     end
 
     def validate!
-      @error = nil
-      ClassyHash.validate(content, schema)
-    rescue RuntimeError => e
-      @error = e.message
-      raise SchemaError, @error
+      fail SchemaError, validation_result.error unless validation_result.valid?
     end
 
     def error
-      return nil if valid?
-      @error
+      validation_result.error
     end
 
     private
@@ -77,6 +71,14 @@ module Yamload
 
     def defaults_merger
       @defaults_merger ||= Defaults::Hash.new
+    end
+
+    def validator
+      @validator ||= Validation::Hash.new
+    end
+
+    def validation_result
+      validator.validate(content)
     end
   end
 
