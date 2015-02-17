@@ -2,8 +2,8 @@ require 'yaml'
 require 'ice_nine'
 require 'yamload/loading'
 require 'classy_hash'
-require 'facets/hash/deep_merge'
 require 'yamload/conversion'
+require 'yamload/defaults'
 
 module Yamload
   class Loader
@@ -22,7 +22,7 @@ module Yamload
     end
 
     def content
-      @content ||= IceNine.deep_freeze(defaults.deep_merge(@loader.content))
+      @content ||= IceNine.deep_freeze(content_with_defaults)
     end
 
     def obj
@@ -41,10 +41,12 @@ module Yamload
       @schema ||= {}
     end
 
-    attr_writer :defaults
+    def defaults=(defaults)
+      defaults_merger.defaults = defaults
+    end
 
     def defaults
-      @defaults ||= {}
+      defaults_merger.defaults
     end
 
     def valid?
@@ -65,6 +67,16 @@ module Yamload
     def error
       return nil if valid?
       @error
+    end
+
+    private
+
+    def content_with_defaults
+      defaults_merger.merge(@loader.content)
+    end
+
+    def defaults_merger
+      @defaults_merger ||= Defaults::Hash.new
     end
   end
 
