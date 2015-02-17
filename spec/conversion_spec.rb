@@ -18,7 +18,6 @@ describe Yamload::Conversion do
 
   context 'when converting a number' do
     let(:converter) { Yamload::Conversion::Object.new(number) }
-    specify { is_expected.to be_frozen }
     specify { is_expected.to eq number }
   end
 
@@ -35,7 +34,6 @@ describe Yamload::Conversion do
     specify { is_expected.to be_frozen }
     specify { is_expected.to be_an Array }
     specify { expect(immutable_object.size).to eq 2 }
-    specify { expect(immutable_object[0]).to be_frozen }
     specify { expect(immutable_object[0]).to eq number }
     specify { expect(immutable_object[1]).to be_frozen }
     specify { expect(immutable_object[1]).to eq string }
@@ -47,7 +45,6 @@ describe Yamload::Conversion do
     specify { is_expected.to be_frozen }
     specify { expect(immutable_object.string).to eq string }
     specify { expect(immutable_object.array.size).to eq 2 }
-    specify { expect(immutable_object.array[0]).to be_frozen }
     specify { expect(immutable_object.array[0]).to eq number }
     specify { expect(immutable_object.array[1]).to be_frozen }
     specify { expect(immutable_object.array[1]).to eq string }
