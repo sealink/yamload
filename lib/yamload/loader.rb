@@ -1,4 +1,5 @@
 require 'yaml'
+require 'ice_nine'
 require 'classy_hash'
 require 'facets/hash/deep_merge'
 
