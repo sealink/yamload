@@ -1,3 +1,12 @@
+## 0.1.0 (2015-02-17)
+
+  - use proper semantic versioning (semver.org)
+
+Features:
+
+  - support loading valid yml files which don't define a hash
+  - deprecates `Yamload::Loader#loaded_hash` in favour of `Yamload::Loader#content`
+
 ## 0.0.6 (2015-02-04)
 
 Bugfixes:
