@@ -1,3 +1,9 @@
+## 0.2.0 (2015-02-20)
+
+Features:
+
+  - Add ERB parsing as a prestep for loaded YAML files
+
 ## 0.1.0 (2015-02-17)
 
   - use proper semantic versioning (semver.org)
