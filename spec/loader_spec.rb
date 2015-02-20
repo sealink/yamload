@@ -31,6 +31,13 @@ describe Yamload::Loader do
     specify { expect { content }.to raise_error IOError, 'empty.yml is blank' }
   end
 
+  context 'with a file containing ERB' do
+    let(:file) { :erb }
+    let(:expected_content) { { "erb_var" => "ERB RAN!" } }
+    specify { expect(loader).to exist }
+    specify { expect(content).to eq expected_content }
+  end
+
   context 'with a file defining an array' do
     let(:file) { :array }
     let(:expected_content) { %w(first second third) }

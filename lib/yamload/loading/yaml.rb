@@ -26,9 +26,14 @@ module Yamload
 
       def load
         fail IOError, "#{@file}.yml could not be found" unless exist?
-        YAML.load_file(filepath).tap do |content|
+        YAML.load(erb_parsed_content).tap do |content|
           fail IOError, "#{@file}.yml is blank" if content.blank?
         end
+      end
+
+      def erb_parsed_content
+        raw_content = File.read(filepath, encoding: 'bom|utf-8', mode: 'r')
+        ERB.new(raw_content).result
       end
 
       def filepath
