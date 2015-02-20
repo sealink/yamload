@@ -6,8 +6,8 @@ require 'yamload/version'
 Gem::Specification.new do |spec|
   spec.name          = 'yamload'
   spec.version       = Yamload::VERSION
-  spec.authors       = ['Alessandro Berardi']
-  spec.email         = ['berardialessandro@gmail.com']
+  spec.authors       = ['Alessandro Berardi', 'Adam Davies']
+  spec.email         = ['berardialessandro@gmail.com', 'adzdavies@gmail.com']
   spec.summary       = 'YAML files loader'
   spec.description   = 'YAML files loader with validation'
   spec.homepage      = ''
