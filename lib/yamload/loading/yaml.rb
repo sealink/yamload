@@ -1,4 +1,4 @@
-require 'facets/kernel'
+require 'facets/kernel/blank'
 require 'ice_nine'
 
 module Yamload
