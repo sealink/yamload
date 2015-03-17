@@ -163,7 +163,7 @@ describe Yamload::Loader do
       let(:new_user) { double('new user') }
       specify 'the hash should be immutable' do
         expect { content['users'] << new_user }
-          .to raise_error RuntimeError, "can't modify frozen Array"
+          .to raise_error RuntimeError, /can't modify frozen Array/i
         expect(content['users']).not_to include new_user
       end
     end
@@ -172,7 +172,7 @@ describe Yamload::Loader do
       let(:new_user) { double('new user') }
       specify 'the object should be immutable' do
         expect { content_obj.users << new_user }
-          .to raise_error RuntimeError, "can't modify frozen Array"
+          .to raise_error RuntimeError, /can't modify frozen Array/i
         expect(content_obj.users).not_to include new_user
       end
     end
