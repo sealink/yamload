@@ -8,4 +8,7 @@ script: "bundle exec rake spec"
 notifications:
   email:
     - support@travellink.com.au
-  flowdock: e69dcafad1fea15c6b8c76e9ced965af
+  flowdock:
+    secure: UInYCeoRfF7FEnNgW38nZDk3SXWfWN5rm+tKDWX/eWGIIUuynspe6A8776w+wG+9jSuzGt9J3WEIxxognkYiWmud96NYiKZIQDLx/6ql15A9jEvWwqnWbnaL4F368ujhwLo6V42Z6wRfTUqNeRQKki2WCw0NVmT6Y1bdTeNNy70=
+sudo: false
+cache: bundler
