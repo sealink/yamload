@@ -1,3 +1,9 @@
+## [Unreleased]
+
+Changed:
+
+ - [TT-1790] Update ClassyHash to version 0.2.0
+
 ## 0.2.0 (2015-02-20)
 
 Features:
