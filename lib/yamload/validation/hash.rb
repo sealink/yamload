@@ -20,7 +20,7 @@ module Yamload
         fail ArgumentError, "#{hash} is not a hash" unless hash.is_a?(::Hash)
         ClassyHash.validate(hash, @schema) unless @schema.nil?
         Result.new(true)
-      rescue RuntimeError => e
+      rescue ClassyHash::SchemaViolationError => e
         Result.new(false, e.message)
       end
     end

@@ -240,7 +240,7 @@ describe Yamload::Loader do
           }
         }
 
-        let(:expected_error) { '"users"[0]["expected_attribute"] is not present' }
+        let(:expected_error) { '"users"[0]["expected_attribute"] is not present, "users"[0] is not one of a Hash matching {schema with keys ["expected_attribute"]}' }
         specify { expect(loader).not_to be_valid }
         specify { expect(loader.error).to eq expected_error }
         specify { expect { loader.validate! }.to raise_error Yamload::SchemaError, expected_error }
