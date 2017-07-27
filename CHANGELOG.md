@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+Removed:
+ - [TT-2967] Remove deprecated `Yamload::Loader#loaded_hash`
 Changed:
 
  - [TT-1790] Update ClassyHash to version 0.2.0

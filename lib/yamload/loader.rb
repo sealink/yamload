@@ -15,12 +15,6 @@ module Yamload
       @loader.exist?
     end
 
-    # <b>DEPRECATED:</b> Please use <tt>content</tt> instead.
-    def loaded_hash
-      warn '[DEPRECATION] `loaded_hash` is deprecated.  Please use `content` instead.'
-      content
-    end
-
     def content
       @content ||= IceNine.deep_freeze(content_with_defaults)
     end
