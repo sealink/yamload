@@ -8,7 +8,6 @@
 
 * YAML files loading
 * Recursive conversion to immutable objects
-* Schema validation
 * Default values
 
 ## Installation
@@ -49,20 +48,6 @@ loader.content('attribute')
 loader.obj.attribute
 # => true
 ```
-
-Define a schema for the configuration
-```ruby
-# Load config/test.yml
-loader = Yamload::Loader.new(:test)
-loader.schema = { 'test' => String }
-loader.valid?
-# => true
-loader.validate!
-# => nil
-loader.error
-# => nil
-```
-See [Classy Hash](https://github.com/deseretbook/classy_hash) for documentation on schema definitions
 
 Define defaults
 ```ruby
