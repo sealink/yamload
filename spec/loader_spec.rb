@@ -53,15 +53,6 @@ describe Yamload::Loader do
           .to raise_error ArgumentError, "#{expected_content} is not a hash"
       }
     end
-
-    context 'when a schema is defined' do
-      let(:schema) { { test: true } }
-      before { loader.schema = schema }
-      specify {
-        expect { loader.valid? }
-          .to raise_error ArgumentError, "#{expected_content} is not a hash"
-      }
-    end
   end
 
   context 'with a file defining a string' do
@@ -76,15 +67,6 @@ describe Yamload::Loader do
       before { loader.defaults = defaults }
       specify {
         expect { content }
-          .to raise_error ArgumentError, "#{expected_content} is not a hash"
-      }
-    end
-
-    context 'when a schema is defined' do
-      let(:schema) { { test: true } }
-      before { loader.schema = schema }
-      specify {
-        expect { loader.valid? }
           .to raise_error ArgumentError, "#{expected_content} is not a hash"
       }
     end
@@ -130,10 +112,6 @@ describe Yamload::Loader do
       }
     }
 
-    specify 'deprecated `loaded_hash` still works' do
-      expect(loader.loaded_hash).to eq loader.content
-    end
-
     specify { expect(content).to eq expected_content }
 
     let(:content_obj)  { loader.obj }
@@ -174,76 +152,6 @@ describe Yamload::Loader do
         expect { content_obj.users << new_user }
           .to raise_error RuntimeError, /can't modify frozen Array/i
         expect(content_obj.users).not_to include new_user
-      end
-    end
-
-    context 'when no schema is defined' do
-      specify { expect(loader).to be_valid }
-      specify { expect(loader.error).to be_nil }
-      specify { expect { loader.validate! }.not_to raise_error }
-    end
-
-    context 'when the schema is not a hash' do
-      let(:schema) { 'not a hash' }
-      specify {
-        expect { loader.schema = schema }
-          .to raise_error ArgumentError, "#{schema} is not a hash"
-      }
-    end
-
-    context 'when a schema is defined' do
-      let(:schema) {
-        {
-          'test'     => TrueClass,
-          'users'    => [
-            [
-              {
-                'first_name' => String,
-                'last_name'  => String,
-                'address'    => {
-                  'address_line_1' => String,
-                  'address_line_2' => [:optional, String, NilClass],
-                  'city'           => String,
-                  'state'          => String,
-                  'post_code'      => Integer,
-                  'country'        => String
-                },
-                'email'      => String
-              }
-            ]
-          ],
-          'settings' => {
-            'remote_access' => TrueClass
-          }
-        }
-      }
-
-      before do
-        loader.schema = schema
-      end
-
-      specify { expect(loader.schema).to eq schema }
-      specify { expect(loader).to be_valid }
-      specify { expect(loader.error).to be_nil }
-      specify { expect { loader.validate! }.not_to raise_error }
-
-      context 'when the schema is not matched' do
-        let(:schema) {
-          {
-            'users' => [
-              [
-                {
-                  'expected_attribute' => String
-                }
-              ]
-            ]
-          }
-        }
-
-        let(:expected_error) { '"users"[0]["expected_attribute"] is not present, "users"[0] is not one of a Hash matching {schema with keys ["expected_attribute"]}' }
-        specify { expect(loader).not_to be_valid }
-        specify { expect(loader.error).to eq expected_error }
-        specify { expect { loader.validate! }.to raise_error Yamload::SchemaError, expected_error }
       end
     end
 

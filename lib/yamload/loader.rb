@@ -3,7 +3,6 @@ require 'ice_nine'
 require 'yamload/loading'
 require 'yamload/conversion'
 require 'yamload/defaults'
-require 'yamload/validation'
 
 module Yamload
   class Loader
@@ -13,12 +12,6 @@ module Yamload
 
     def exist?
       @loader.exist?
-    end
-
-    # <b>DEPRECATED:</b> Please use <tt>content</tt> instead.
-    def loaded_hash
-      warn '[DEPRECATION] `loaded_hash` is deprecated.  Please use `content` instead.'
-      content
     end
 
     def content
@@ -43,26 +36,6 @@ module Yamload
       defaults_merger.defaults
     end
 
-    def schema=(schema)
-      validator.schema = schema
-    end
-
-    def schema
-      validator.schema
-    end
-
-    def valid?
-      validation_result.valid?
-    end
-
-    def validate!
-      fail SchemaError, validation_result.error unless validation_result.valid?
-    end
-
-    def error
-      validation_result.error
-    end
-
     private
 
     def content_with_defaults
@@ -72,15 +45,5 @@ module Yamload
     def defaults_merger
       @defaults_merger ||= Defaults::Hash.new
     end
-
-    def validator
-      @validator ||= Validation::Hash.new
-    end
-
-    def validation_result
-      validator.validate(content)
-    end
   end
-
-  class SchemaError < StandardError; end
 end
