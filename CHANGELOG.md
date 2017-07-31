@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.3.0 (2017-07-31)
+
 Removed:
  - [TT-2967] Remove deprecated `Yamload::Loader#loaded_hash`
  - [TT-2967] Remove schema validation
