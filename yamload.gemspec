@@ -18,16 +18,16 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 1.9.3'
+  spec.required_ruby_version = '>= 2.5.0'
 
-  spec.add_dependency 'anima', '~> 0.2'
-  spec.add_dependency 'facets', '~> 3.0'
+  spec.add_dependency 'anima', '>= 0.2'
+  spec.add_dependency 'facets', '>= 3.0'
 
-  spec.add_development_dependency 'bundler', '~> 1.7'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.2'
+  spec.add_development_dependency 'bundler', '>= 1.7'
+  spec.add_development_dependency 'rake', '>= 10.0'
+  spec.add_development_dependency 'rspec', '>= 3.2'
   spec.add_development_dependency 'coverage-kit'
-  spec.add_development_dependency 'simplecov-rcov', '~> 0.2'
+  spec.add_development_dependency 'simplecov-rcov', '>= 0.2'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'travis'

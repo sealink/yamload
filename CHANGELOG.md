@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+ - [TT-7323] Bring all dependencies up to date
+
 ## 0.3.0 (2017-07-31)
 
 Removed:
