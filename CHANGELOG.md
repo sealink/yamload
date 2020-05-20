@@ -1,4 +1,4 @@
-## [Unreleased]
+## 0.4.0 (2020-05-20)
 
  - [TT-7323] Bring all dependencies up to date
 
