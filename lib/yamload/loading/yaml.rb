@@ -33,13 +33,43 @@ module Yamload
 
       def erb_parsed_content
         raw_content = File.read(filepath, encoding: 'bom|utf-8', mode: 'r')
-        ERB.new(raw_content).result
+        ERB.new(raw_content).result(binding)
+      end
+
+      def get_ssm(key)
+
       end
 
       def filepath
         fail IOError, 'No yml files directory specified' if @dir.nil?
         fail IOError, "#{@dir} is not a valid directory" unless File.directory?(@dir)
         File.join(@dir, "#{@file}.yml")
+      end
+
+      def secrets_client
+        options = {}
+        options[:endpoint] = ENV['AWS_SECRETS_MANAGER_ENDPOINT'] if ENV.has_key?('AWS_SECRETS_MANAGER_ENDPOINT')
+        @secrets_client ||= Aws::SecretsManager::Client.new(options)
+      end
+
+      def get_secret(key)
+        secrets_client.get_secret_value(secret_id: key).secret_string
+      end
+
+      def ssm_client
+        options = {}
+        options[:endpoint] = ENV['AWS_SSM_ENDPOINT'] if ENV.has_key?('AWS_SSM_ENDPOINT')
+        @ssm_client ||= Aws::SSM::Client.new(options)
+      end
+
+      def get_parameter(key, encrypted: true)
+        ssm_client.get_parameter(
+          name: key,
+          with_decryption: encrypted
+        ).parameter.value
+      rescue Aws::SSM::Errors::ParameterNotFound => e
+        puts "Parameter #{key} not found"
+        raise e
       end
     end
   end
