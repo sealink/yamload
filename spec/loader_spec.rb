@@ -45,6 +45,18 @@ describe Yamload::Loader do
     let(:expected_content) { { "erb_var" => "ERB RAN!", "ssm_var" => "SSM SUCCESS", "secret_var" => "SECRET SUCCESS" } }
     specify { expect(loader).to exist }
     specify { expect(content).to eq expected_content }
+
+    context 'with bad parameter key' do
+      before do
+        allow_any_instance_of(Aws::SSM::Client).to receive(:get_parameter).
+          with({ name: 'bad_key', with_decryption: true }).
+          and_raise(Aws::SSM::Errors::ParameterNotFound.new(Seahorse, 'bad_key'))
+      end
+      let(:file) { :erb_bad }
+      specify {
+        expect { content }.to raise_error Aws::SSM::Errors::ParameterNotFound
+      }
+    end
   end
 
   context 'with a file defining an array' do
