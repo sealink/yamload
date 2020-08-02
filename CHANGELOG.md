@@ -1,4 +1,4 @@
-## Unreleased
+## 0.5.0 (2020-07-02)
 
  - [TT-7683] Add support for AWS SSM and AWS Secrets Manager
 
