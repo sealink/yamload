@@ -1,2 +1,4 @@
 ---
 erb_var: <%= 'ERB RAN!' %>
+ssm_var: <%= get_parameter 'ssm_var' %>
+secret_var: <%= get_secret 'secret_var' %>
