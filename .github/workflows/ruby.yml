@@ -13,4 +13,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+        env:
+          AWS_REGION: us-east-1
       - run: bundle exec rake
