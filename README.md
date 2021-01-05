@@ -1,14 +1,13 @@
 # Yamload
 
 [![Gem Version](https://badge.fury.io/rb/yamload.svg)](http://badge.fury.io/rb/yamload)
-[![Build Status](https://travis-ci.org/sealink/yamload.svg?branch=master)](https://travis-ci.org/sealink/yamload)
+[![Build Status](https://github.com/sealink/yamload/workflows/Build%20and%20Test/badge.svg?branch=master)](https://github.com/sealink/yamload/actions)
 [![Coverage Status](https://coveralls.io/repos/sealink/yamload/badge.svg)](https://coveralls.io/r/sealink/yamload)
-[![Dependency Status](https://gemnasium.com/sealink/yamload.svg)](https://gemnasium.com/sealink/yamload)
 [![Code Climate](https://codeclimate.com/github/sealink/yamload/badges/gpa.svg)](https://codeclimate.com/github/sealink/yamload)
 
-* YAML files loading
-* Recursive conversion to immutable objects
-* Default values
+- YAML files loading
+- Recursive conversion to immutable objects
+- Default values
 
 ## Installation
 
@@ -29,17 +28,20 @@ Or install it yourself as:
 ## Usage
 
 Set up the YAML files directory
+
 ```ruby
 Yamload.dir = File.join(File.dirname(File.expand_path(__FILE__)),'config')
 ```
 
 e.g. config/test.yml
+
 ```yaml
 ---
 test: true
 ```
 
 Load YAML files from the directory and access keys
+
 ```ruby
 # Load config/test.yml
 loader = Yamload::Loader.new(:test)
@@ -50,9 +52,23 @@ loader.obj.attribute
 ```
 
 Define defaults
+
 ```ruby
 loader.defaults = { 'test' => true , 'coverage' => { 'minimum' => 0.95 } }
 ```
+
+## Release
+
+To publish a new version of this gem the following steps must be taken.
+
+* Update the version in the following files
+  ```
+    CHANGELOG.md
+    lib/yamload/version.rb
+  ````
+* Create a tag using the format v0.1.0
+* Follow build progress in GitHub actions
+
 
 ## Contributing
 

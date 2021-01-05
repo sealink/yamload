@@ -1,3 +1,7 @@
+## Unreleased
+
+- [TT-8616] Update to build with github actions / ruby 3.0 / rails 6.1
+
 ## 0.5.0 (2020-07-02)
 
  - [TT-7683] Add support for AWS SSM and AWS Secrets Manager
