@@ -30,7 +30,7 @@ module Yamload
         content = if YAML.respond_to?(:unsafe_load)
           YAML.unsafe_load(source)
         else
-          YAML.safe_load(source)
+          YAML.load(source)
         end
         fail IOError, "#{@file}.yml is blank" if content.blank?
         content
