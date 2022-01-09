@@ -1,3 +1,7 @@
+## Unreleased
+
+- [PLAT-186] Add support for Ruby 3.1
+
 ## 0.6.0
 
 - [TT-8616] Update to build with github actions / ruby 3.0 / rails 6.1
