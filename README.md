@@ -3,7 +3,6 @@
 [![Gem Version](https://badge.fury.io/rb/yamload.svg)](http://badge.fury.io/rb/yamload)
 [![Build Status](https://github.com/sealink/yamload/workflows/Build%20and%20Test/badge.svg?branch=master)](https://github.com/sealink/yamload/actions)
 [![Coverage Status](https://coveralls.io/repos/sealink/yamload/badge.svg)](https://coveralls.io/r/sealink/yamload)
-[![Code Climate](https://codeclimate.com/github/sealink/yamload/badges/gpa.svg)](https://codeclimate.com/github/sealink/yamload)
 
 - YAML files loading
 - Recursive conversion to immutable objects
