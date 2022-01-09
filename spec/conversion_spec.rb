@@ -8,8 +8,8 @@ describe Yamload::Conversion do
   let(:array) { [number, string] }
   let(:hash) {
     {
-      string:,
-      array:,
+      string: string,
+      array: array,
       sub_hash: {something: "else"}
     }
   }
