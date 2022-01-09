@@ -1,11 +1,11 @@
-require 'yaml'
-require 'ice_nine'
-require 'aws-sdk-secretsmanager'
-require 'aws-sdk-ssm'
+require "yaml"
+require "ice_nine"
+require "aws-sdk-secretsmanager"
+require "aws-sdk-ssm"
 
-require 'yamload/loading'
-require 'yamload/conversion'
-require 'yamload/defaults'
+require "yamload/loading"
+require "yamload/conversion"
+require "yamload/defaults"
 
 module Yamload
   class Loader

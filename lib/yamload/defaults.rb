@@ -3,4 +3,4 @@ module Yamload
   end
 end
 
-require 'yamload/defaults/hash'
+require "yamload/defaults/hash"
