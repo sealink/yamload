@@ -30,7 +30,9 @@ module Yamload
         content = if YAML.respond_to?(:unsafe_load)
           YAML.unsafe_load(source)
         else
+          # rubocop:disable Security::YAMLLoad
           YAML.load(source)
+          # rubocop:enable Security::YAMLLoad
         end
         fail IOError, "#{@file}.yml is blank" if content.blank?
         content
