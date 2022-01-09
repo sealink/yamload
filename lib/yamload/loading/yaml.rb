@@ -26,9 +26,14 @@ module Yamload
 
       def load
         fail IOError, "#{@file}.yml could not be found" unless exist?
-        YAML.load(erb_parsed_content).tap do |content|
-          fail IOError, "#{@file}.yml is blank" if content.blank?
+        source = erb_parsed_content
+        content = if YAML.respond_to?(:unsafe_load)
+          YAML.unsafe_load(source)
+        else
+          YAML.load(source)
         end
+        fail IOError, "#{@file}.yml is blank" if content.blank?
+        content
       end
 
       def erb_parsed_content

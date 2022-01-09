@@ -93,6 +93,18 @@ describe Yamload::Loader do
     end
   end
 
+  context 'with an unsafe configuration' do
+    let(:file) { :unsafe }
+    let(:expected_content) {
+      {
+        'defaults'  => { 'adapter' => 'mysql2' },
+        'development' => { 'adapter' => 'sqlite' }
+      }
+    }
+
+    specify { expect(content).to eq expected_content }
+  end
+
   context 'with a file defining a hash' do
     specify { expect(loader).to exist }
 
