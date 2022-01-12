@@ -1,4 +1,4 @@
-require 'facets/hash/deep_merge'
+require "facets/hash/deep_merge"
 
 module Yamload
   module Defaults

@@ -1,5 +1,5 @@
-require 'facets/hash/rekey'
-require 'anima'
+require "facets/hash/rekey"
+require "anima"
 
 module Yamload
   module Conversion

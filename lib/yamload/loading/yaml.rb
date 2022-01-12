@@ -1,12 +1,12 @@
-require 'facets/kernel/blank'
-require 'ice_nine'
+require "facets/kernel/blank"
+require "ice_nine"
 
 module Yamload
   module Loading
     class Yaml
       def initialize(file, dir)
         @file = file
-        @dir  = dir
+        @dir = dir
       end
 
       def exist?
@@ -26,25 +26,32 @@ module Yamload
 
       def load
         fail IOError, "#{@file}.yml could not be found" unless exist?
-        YAML.load(erb_parsed_content).tap do |content|
-          fail IOError, "#{@file}.yml is blank" if content.blank?
+        source = erb_parsed_content
+        content = if YAML.respond_to?(:unsafe_load)
+          YAML.unsafe_load(source)
+        else
+          # rubocop:disable Security::YAMLLoad
+          YAML.load(source)
+          # rubocop:enable Security::YAMLLoad
         end
+        fail IOError, "#{@file}.yml is blank" if content.blank?
+        content
       end
 
       def erb_parsed_content
-        raw_content = File.read(filepath, encoding: 'bom|utf-8', mode: 'r')
+        raw_content = File.read(filepath, encoding: "bom|utf-8", mode: "r")
         ERB.new(raw_content).result(binding)
       end
 
       def filepath
-        fail IOError, 'No yml files directory specified' if @dir.nil?
+        fail IOError, "No yml files directory specified" if @dir.nil?
         fail IOError, "#{@dir} is not a valid directory" unless File.directory?(@dir)
         File.join(@dir, "#{@file}.yml")
       end
 
       def secrets_client
         options = {}
-        options[:endpoint] = ENV['AWS_SECRETS_MANAGER_ENDPOINT'] if ENV.has_key?('AWS_SECRETS_MANAGER_ENDPOINT')
+        options[:endpoint] = ENV["AWS_SECRETS_MANAGER_ENDPOINT"] if ENV.has_key?("AWS_SECRETS_MANAGER_ENDPOINT")
         @secrets_client ||= Aws::SecretsManager::Client.new(options)
       end
 
@@ -54,7 +61,7 @@ module Yamload
 
       def ssm_client
         options = {}
-        options[:endpoint] = ENV['AWS_SSM_ENDPOINT'] if ENV.has_key?('AWS_SSM_ENDPOINT')
+        options[:endpoint] = ENV["AWS_SSM_ENDPOINT"] if ENV.has_key?("AWS_SSM_ENDPOINT")
         @ssm_client ||= Aws::SSM::Client.new(options)
       end
 

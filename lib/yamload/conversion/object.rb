@@ -1,5 +1,5 @@
-require 'facets/object/dup'
-require 'ice_nine'
+require "facets/object/dup"
+require "ice_nine"
 
 module Yamload
   module Conversion

@@ -1,4 +1,4 @@
-require 'yamload/version'
+require "yamload/version"
 
 module Yamload
   class << self
@@ -6,4 +6,4 @@ module Yamload
   end
 end
 
-require 'yamload/loader'
+require "yamload/loader"

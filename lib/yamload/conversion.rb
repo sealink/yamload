@@ -3,6 +3,6 @@ module Yamload
   end
 end
 
-require 'yamload/conversion/array'
-require 'yamload/conversion/hash'
-require 'yamload/conversion/object'
+require "yamload/conversion/array"
+require "yamload/conversion/hash"
+require "yamload/conversion/object"

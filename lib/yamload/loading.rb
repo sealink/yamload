@@ -3,4 +3,4 @@ module Yamload
   end
 end
 
-require 'yamload/loading/yaml'
+require "yamload/loading/yaml"
