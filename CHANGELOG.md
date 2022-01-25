@@ -1,4 +1,8 @@
-## Unreleased
+## 0.7.1
+
+- Fix incorrect tags
+
+## 0.7.0
 
 - [PLAT-186] Add support for Ruby 3.1
 
