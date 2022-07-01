@@ -50,6 +50,7 @@ module Yamload
       end
 
       def secrets_client
+        require "aws-sdk-secretsmanager"
         options = {}
         options[:endpoint] = ENV["AWS_SECRETS_MANAGER_ENDPOINT"] if ENV.has_key?("AWS_SECRETS_MANAGER_ENDPOINT")
         @secrets_client ||= Aws::SecretsManager::Client.new(options)
@@ -60,6 +61,7 @@ module Yamload
       end
 
       def ssm_client
+        require "aws-sdk-ssm"
         options = {}
         options[:endpoint] = ENV["AWS_SSM_ENDPOINT"] if ENV.has_key?("AWS_SSM_ENDPOINT")
         @ssm_client ||= Aws::SSM::Client.new(options)
