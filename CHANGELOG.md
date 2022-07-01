@@ -1,3 +1,7 @@
+## Unreleased
+
+- [PLAT-379] Improve bundler startup time
+
 ## 0.7.1
 
 - Fix incorrect tags
