@@ -1,4 +1,4 @@
-## Unreleased
+## 0.8.0
 
 - [PLAT-379] Improve bundler startup time
 
