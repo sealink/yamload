@@ -1,3 +1,7 @@
+## Unreleased
+
+- [PLAT-1175] Update to Ruby 3.2
+
 ## 0.8.0
 
 - [PLAT-379] Improve bundler startup time
